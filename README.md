@@ -1,2 +1,2 @@
 # eleven-open
-Opensource version of Eleven Engine serverless platform
+Opensource version of the Eleven Engine serverless hosting platform
