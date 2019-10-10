@@ -1,0 +1,11 @@
+{
+  "name": "eleven_open",
+  "version": "0.0.1",
+  "description": "Eleven Engine open pagebuilder",
+  "main": "pageBuilder_lambda.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eleven Engine",
+  "license": "MIT"
+}
