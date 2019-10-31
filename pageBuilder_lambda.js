@@ -2,76 +2,70 @@
  * Filename: pageBuilder_lambda.js
  * Lambda name: EEOpen_pageBuilder
  * Project: EE Open
- * version: 0.0.1
- * Maintainer: Jon Stephenson jstephenson@elevenengine.com
+ * version: 0.0.2
+ * Maintainer: Jon Stephenson jstephenson@commercialnoise.com
  * Node ver: 10.x
  *
+ * Lambda to build EEOpen pages
  */
 
+const AWS = require('aws-sdk');
 AWS.config.region = 'us-east-1';
 const lambda = new AWS.Lambda();
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
-const siteTable = `EE_open_site`;
-const templateTable = `EE_open_templates`;
-const ver = `0.3`;
+const siteTable = `EEOpen_sites`;
+const ver = `0.0.2`;
 
-let baseURL;
-let sitePageDate;
-let buildBody;
+let siteURL;
+let pagePath;
 let host;
+let TableName;
+let pageData;
 
 module.exports.handler = async(event) => {
 
-  baseURL = "";
+  siteURL = 'codedthis.com';
+  pagePath = event.path;
 
-  let siteParams = {
+  let pageParams = {
     TableName: siteTable,
     Key: {
-      baseURL: baseURL,
-      pagePath: '/'
-    },
-  };
-
-  sitePageDate = await getSitePage();
-
-  const getSitePage = async () => {
-    try {
-      const data = await dynamoDB.get(siteParams).promise();
-      return { data: data };
-    } catch (error) {
-      return {
-        statusCode: 400,
-        error: `Could not fetch: ${error.stack}`
-      };
+      siteURL: siteURL,
+      pagePath: pagePath
     }
-  }
-
-  function replaceString(request) {
-    return request;
   };
 
-  function buildBody(request) {
-    host = request.headers.Host;
-    buildBody = replaceString(buildBody);
-    return returnBody(buildBody);
-  };
+	async function returnBody(requestEvent) {
 
-	function returnBody(request) {
-    body = request;
+    host = requestEvent.headers.Host;
+    path = requestEvent.path;
+    pageData = await getPageData()
+
+
+    //body = parseTemplate(pageData);
+    body = `{"data": "data"}`;
 		responseBody = {
-		    "isBase64Encoded": false,
-		    "statusCode": 200,
-		    "headers": {
-				'Content-Type': 'text/html',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true,
-                "ver": ver,
+      "isBase64Encoded": false,
+      "statusCode": 200,
+      "headers": {
+      "Content-Type": "text/html",
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Credentials": true,
+              "ver": ver,
 			},
 		    "body": body
 		}
 		return responseBody
 	};
 
-  return buildBody(event);
+  async function getPageData() {
+    let queryParams = await dynamoDB.get(pageParams).promise().then();
+    console.log(`queryParams ${JSON.stringify(queryParams)}`);
+
+
+    return {queryParams}; 
+  }
+
+  return returnBody(event);
 };

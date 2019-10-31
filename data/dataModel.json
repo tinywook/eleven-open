@@ -1,0 +1,51 @@
+[
+  {
+	"url": "",
+	"Path": "",
+	"clientID": 0,
+	"clientName": "",
+	"apiUrl": "",
+	"productionUrl": "",
+	"page": [
+		{
+			"featuredImage": "",
+			"exerpt": "",
+			"title": "",
+			"desription": "",
+			"meta": [
+				{
+					"type": "",
+					"label": "",
+					"content": ""
+					
+				}
+			]
+		}
+	],
+	"body": [
+		{
+			"order": 0,
+			"content": ""
+		}
+	],
+	"navigation": [
+		{
+			"order": 0,
+			"group": "",
+			"displayText": "",
+			"altText": "",
+			"image": "",
+			"url": "",
+			"ID": 0,
+			"parent": 0
+		}
+	],
+	"template": [
+		{			
+			"templateID": 0,
+			"templateName": "",
+			"templatePath": ""
+		}
+	]
+  }
+]
