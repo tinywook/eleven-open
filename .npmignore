@@ -1,0 +1,7 @@
+#Ignore for deploy
+public
+_html
+util
+data
+README.md
+.git
